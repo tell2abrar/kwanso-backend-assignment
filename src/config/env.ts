@@ -17,6 +17,9 @@ const env = cleanEnv(process.env, {
   DATABASE_URL: str({
     desc: 'Url of the database',
   }),
+  JWT_ACCESS_KEY: str({
+    desc: 'JWT Access key',
+  }),
 });
 
 export default env;
