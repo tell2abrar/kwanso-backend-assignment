@@ -8,6 +8,7 @@ import { Repository } from 'typeorm';
 import dbManager from '../../db';
 import { matchPassword } from './utils';
 import { UserDto } from '../user/dto';
+import { HTTP400Error } from '../../errors';
 
 const { JWT_ACCESS_KEY } = env;
 
@@ -21,6 +22,8 @@ class AuthService implements IAuthService {
     email,
     password,
   }: LoginInputDto): Promise<LoginResponseDto> => {
+    if (!email && !password) throw new HTTP400Error('Invalid Credentails');
+
     const user = await this.userRepo.findOne({ where: { email } });
 
     if (!user) throw new Error('Invalid Credentials');

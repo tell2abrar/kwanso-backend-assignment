@@ -1,4 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
+import { HttpStatusCode } from '../errors';
 import AuthMiddleware from './auth.middleware';
 
 type ExpressMethod<T> = (
@@ -15,13 +16,13 @@ export const catchAsync = <T>(fn: ExpressMethod<T>) => {
   ): Promise<Response> => {
     return fn(req, res, next)
       .then((data) => {
-        return res.status(200).json({
+        return res.status(HttpStatusCode.SUCCESS).json({
           status: 'success',
           data,
         });
       })
       .catch((error) => {
-        return res.status(500).json({
+        return res.status(error.httpCode).json({
           message: error.message,
         });
       });
