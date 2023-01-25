@@ -1,4 +1,3 @@
-import { SessionInfo } from '../auth/interface';
 import { Length, IsEmail } from 'class-validator';
 
 export class CreateUserDto {
@@ -13,6 +12,9 @@ export class CreateUserDto {
 export class UserDto {
   id: number;
   email: string;
+}
+export class GetUserResponse {
+  user: UserDto;
 }
 
 export class RegisterResponse {

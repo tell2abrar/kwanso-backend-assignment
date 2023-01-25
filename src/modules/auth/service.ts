@@ -8,7 +8,7 @@ import { Repository } from 'typeorm';
 import dbManager from '../../db';
 import { matchPassword } from './utils';
 import { UserDto } from '../user/dto';
-import { HTTP400Error } from '../../errors';
+import { HTTP400Error, HTTP403Error } from '../../errors';
 
 const { JWT_ACCESS_KEY } = env;
 
@@ -26,21 +26,27 @@ class AuthService implements IAuthService {
 
     const user = await this.userRepo.findOne({ where: { email } });
 
-    if (!user) throw new Error('Invalid Credentials');
+    if (!user) throw new HTTP400Error('Invalid Credentials');
     if (!(await matchPassword(password, user.password)))
-      throw new Error('Invalid Credetials');
+      throw new HTTP400Error('Invalid Credetials');
 
     const userPayload: SessionPayloadDto = AuthMapper.createSessionDto(user);
-    const session: SessionInfo = this.createSession(userPayload);
+    const { accessToken }: SessionInfo = this.createSession(userPayload);
 
     return {
-      session,
-      user: user,
+      jwt: accessToken,
     };
   };
 
   verifyAccessToken = async (accessToken: string): Promise<UserDto | null> => {
-    const decodedJWT: any = jwt.verify(accessToken, JWT_ACCESS_KEY);
+    let decodedJWT: any;
+    jwt.verify(accessToken, 'abrar', (error, session) => {
+      if (error) {
+        throw new HTTP403Error('forbidden');
+      }
+      decodedJWT = session;
+    });
+
     const data: UserDto | null = await this.userRepo.findOne({
       where: { id: decodedJWT.id },
     });
@@ -50,7 +56,11 @@ class AuthService implements IAuthService {
 
   createSession = (payload: SessionPayloadDto): SessionInfo => {
     try {
-      const accessToken: JwtToken = this.createJwt(payload, 7, JWT_ACCESS_KEY);
+      const accessToken: JwtToken = this.createJwt(
+        payload,
+        500000,
+        JWT_ACCESS_KEY
+      );
       return {
         accessToken,
       };

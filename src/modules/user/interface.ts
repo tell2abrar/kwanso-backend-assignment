@@ -1,9 +1,14 @@
 import { User } from '../../db/entities';
-import { CreateUserDto, RegisterResponse, UserDto } from './dto';
+import {
+  CreateUserDto,
+  GetUserResponse,
+  RegisterResponse,
+  UserDto,
+} from './dto';
 
 export interface IUserService {
   register(req: CreateUserDto): Promise<RegisterResponse | null>;
-  getUser(userId: number): Promise<User | undefined>;
+  getUser(userId: number): Promise<GetUserResponse>;
 }
 
 export interface IUserMapper {

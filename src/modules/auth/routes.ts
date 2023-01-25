@@ -8,7 +8,7 @@ export class AuthRoutes extends CommonRoutesConfig {
   }
 
   configureRoutes(): Application {
-    this.app.route('/auth/login').post(AuthController.login);
+    this.app.route('/login').post(AuthController.login);
     return this.app;
   }
 }

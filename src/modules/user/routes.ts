@@ -1,10 +1,9 @@
-import { Application } from 'express';
 import UserController from './controller';
-
-import { CommonRoutesConfig } from '../../common/routes.config';
 import ValidateMiddleware from '../../common/validate.middleware';
-
+import { Application } from 'express';
 import { CreateUserDto } from './dto';
+import { CommonRoutesConfig } from '../../common/routes.config';
+import authMiddleware from '../../common/auth.middleware';
 
 export class UserRoutes extends CommonRoutesConfig {
   constructor(app: Application) {
@@ -18,6 +17,10 @@ export class UserRoutes extends CommonRoutesConfig {
         ValidateMiddleware.validate(CreateUserDto),
         UserController.register
       );
+
+    this.app
+      .route('/user')
+      .get(authMiddleware.authorization, UserController.getUser);
 
     return this.app;
   }

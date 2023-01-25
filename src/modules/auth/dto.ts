@@ -1,6 +1,5 @@
 import { IsEmail, Length } from 'class-validator';
-import { User } from '../../db/entities';
-import { SessionInfo } from './interface';
+import { JwtToken, SessionInfo } from './interface';
 
 export class LoginInputDto {
   @Length(3, 255)
@@ -17,6 +16,5 @@ export class SessionPayloadDto {
 }
 
 export interface LoginResponseDto {
-  user: User;
-  session: SessionInfo;
+  jwt: JwtToken;
 }

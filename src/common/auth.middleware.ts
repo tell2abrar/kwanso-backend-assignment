@@ -11,8 +11,8 @@ class AuthMiddleware {
       if (!accessToken) throw new HTTP400Error('Access token not found');
 
       let user = null;
-      user = await AuthService.verifyAccessToken(accessToken);
 
+      user = await AuthService.verifyAccessToken(accessToken);
       if (!user) throw new HTTP400Error('User not authorized');
       req.user = user;
 

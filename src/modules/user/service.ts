@@ -1,5 +1,10 @@
 import UserMapper from './mapper';
-import { CreateUserDto, UserDto, RegisterResponse } from './dto';
+import {
+  CreateUserDto,
+  UserDto,
+  RegisterResponse,
+  GetUserResponse,
+} from './dto';
 import { User } from '../../db/entities';
 import { IUserService } from './interface';
 import dbManager from '../../db';
@@ -18,10 +23,11 @@ class UserService implements IUserService {
     this.userRepo = dbManager.getRepository(User);
   }
 
-  getUser = async (userId: number): Promise<User | undefined> => {
+  getUser = async (userId: number): Promise<GetUserResponse> => {
     const userFound = await this.userRepo.findOne({ where: { id: userId } });
     if (!userFound) throw new HTTP404Error('user not found');
-    return userFound;
+    const responseToSend: UserDto = UserMapper.entityToDto(userFound);
+    return { user: responseToSend };
   };
 
   register = async (req: CreateUserDto): Promise<RegisterResponse | null> => {
