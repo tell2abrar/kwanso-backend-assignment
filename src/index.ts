@@ -6,11 +6,13 @@ import { CommonRoutesConfig } from './common/routes.config';
 import { AuthRoutes } from './modules/auth/routes';
 import configureExpress from './config/express';
 import { UserRoutes } from './modules/user/routes';
+import { TaskRoutes } from './modules/task/routes';
 
 const configureRoutes = (app: Application): Array<CommonRoutesConfig> => {
   const routes: Array<CommonRoutesConfig> = [];
   routes.push(new AuthRoutes(app));
   routes.push(new UserRoutes(app));
+  routes.push(new TaskRoutes(app));
 
   return routes;
 };
