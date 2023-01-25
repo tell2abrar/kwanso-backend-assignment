@@ -1,8 +1,3 @@
-export const isEmptyList = (list: any): boolean => {
-  if (list && list.length !== 0) return false;
-  else return true;
-};
-
 export const extractAuthToken = (token: string): string | null => {
   if (!token) {
     return null;
