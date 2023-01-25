@@ -1,0 +1,35 @@
+{
+  "name": "kwanso-backend-assignment",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start:dev": "npx nodemon",
+    "start:prod": "npm run build && node build/index.js",
+    "build": "rimraf ./build && tsc",
+    "typeorm": "typeorm-ts-node-commonjs",
+    "migration:create": "typeorm migration:create src/db/migrations/$Table",
+    "local-migration:run": "ts-node ./node_modules/typeorm/cli.js migration:run -d src/index.ts",
+    "prod-migration:run": "ts-node ./node_modules/typeorm/cli.js migration:run -d ./dist/src/index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/express": "^4.17.16",
+    "@types/node": "^18.11.18",
+    "nodemon": "^2.0.20",
+    "rimraf": "^4.1.2",
+    "ts-node": "^10.9.1",
+    "typescript": "^4.9.4"
+  },
+  "dependencies": {
+    "envalid": "^7.3.1",
+    "express": "^4.18.2",
+    "pg": "^8.8.0",
+    "reflect-metadata": "^0.1.13",
+    "typeorm": "^0.3.11",
+    "typeorm-naming-strategies": "^4.1.0"
+  }
+}
