@@ -17,5 +17,4 @@ export class UserDto {
 
 export class RegisterResponse {
   user: UserDto;
-  session: SessionInfo;
 }
