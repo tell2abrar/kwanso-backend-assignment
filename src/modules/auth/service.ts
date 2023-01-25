@@ -40,7 +40,7 @@ class AuthService implements IAuthService {
 
   verifyAccessToken = async (accessToken: string): Promise<UserDto | null> => {
     let decodedJWT: any;
-    jwt.verify(accessToken, 'abrar', (error, session) => {
+    jwt.verify(accessToken, JWT_ACCESS_KEY, (error, session) => {
       if (error) {
         throw new HTTP403Error('forbidden');
       }

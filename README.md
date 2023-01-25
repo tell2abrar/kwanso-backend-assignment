@@ -1,8 +1,7 @@
 # Kwanso Backend Assignment
 
 Backend api service (REST). All routes are gated except register and login.
-Proper validations are made.Env file is made public for this assignment.
-Different third party libraries have been used such class-validators,class-transform and class-transformer-validator
+Proper validations are made.Different third party libraries have been used such class-validators,class-transform and class-transformer-validator
 to make validations easy.
 
 ## Tools
@@ -18,6 +17,8 @@ to make validations easy.
 
 1.) `npm install` in directory
 
-2.) `npm run local-migration:run` to run migrations
+2.) `use env example` to setup local environemnt
 
-3.) `npm run start:dev` to spin dev server
+3.) `npm run local-migration:run` to run migrations
+
+4.) `npm run start:dev` to spin dev server
